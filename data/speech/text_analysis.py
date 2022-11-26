@@ -13,12 +13,13 @@ nlp.max_length = 2000000
 date_list = []
 polarity_list = []
 
-path = "/Users/qingyi/Documents/uchicago/courses/data_programming_for_public_policy_2/Political_Polarization/data/speech/speech_data_content"
+path = "/Users/guangbo_niu/Library/Mobile Documents/com~apple~CloudDocs/Academics/Autumn 2022/DPPP 2/Political_Polarization/data/speech/speech_data_content"
 flag = 0
 # try:
 for fname in os.listdir(path): 
-    if flag > 30: 
-        break
+    # flag += 1
+    # if flag > 10: 
+    #     break
     date = fname.replace(".txt", "")
     date = datetime.strptime(date, '%Y-%m-%d').date()
     date_list.append(date) 
