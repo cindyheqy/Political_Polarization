@@ -5,10 +5,27 @@ path = "/Users/qingyi/Documents/uchicago/courses/data_programming_for_public_pol
 speech_date = {}
 
 def get_speech(text): 
+    text = text.split('the President pro tempore')[0]
     pattern = r"(M[a-z]+. [A-Z]+. M[a-z]+. Speaker,(?s).*)" # content starts with Mr/Madam Speaker
     match = re.search(pattern, text)
     if match: 
         return match.group(1)
+
+def clean_data(text): 
+    new_text = re.sub('([A-Z|-])\n([A-Z]*)', r'\1\2', text)
+    new_text = re.sub('([a-z]*)-([a-z]*)', r'\1\2', new_text)
+    new_text = re.sub('IN THE HOUSE OF REPRESENTATIVES  .*, 2017 M', 'M', new_text)
+    output = []
+    new_text_lines = new_text.splitlines()
+    for line in new_text_lines: 
+        if (('CONGRESSIONAL RECORD' not in line) and 
+            ('VerDate' not in line) and 
+            (len(line.split()) > 8) and 
+            (line.strip() != "f") and 
+            ('................' not in line)):
+            output.append(line)
+    new_text = "\n".join(output)
+    return new_text
 
 for fname in os.listdir(os.path.join(path, "speech_data_txt")): 
         with open(f"{path}/speech_data_txt/{fname}") as page: 
@@ -28,10 +45,16 @@ for fname in os.listdir(os.path.join(path, "speech_data_txt")):
                         speech_date[date] = speech_text
                     else: 
                         speech_date[date] += speech_text
+            # speech_date[]
             # if m == False: 
             #     print(date, "no match today!")
             # print(date, count_thespeaker, match_mrspeaker)
+            # clean_content = {date: clean_data(content) for date, content in speech_date.items()}
             if has_speech == True: 
+                speech_date[date] = clean_data(speech_date[date])
                 with open(f"{path}/speech_data_content/{fname}", 'w', encoding='utf-8') as ofile:
                     ofile.write(speech_date[date]) # save speech content
-            
+
+# clean = clean_data(speech_date["2017-12-20"])
+# with open(f"{path}/tmp.txt", 'w', encoding='utf-8') as ofile:
+#     ofile.write(clean)
