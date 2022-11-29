@@ -58,19 +58,20 @@ def draw_change(df):
 
 time_list = []
 polarity_list = []
-for folder in os.listdir(): 
+path = '/Users/qingyi/Documents/uchicago/courses/data_programming_for_public_policy_2/Political_Polarization/data/public opinion/data'
+for folder in os.listdir(path): 
     if folder.startswith('W'): 
         time = convert_time(folder)
         time_list.append(time)
-        for file in os.listdir(folder): 
+        for file in os.listdir(os.path.join(path, folder)): 
             if file.endswith(".sav"): 
-                df = pd.read_spss(os.path.join(folder, file))
+                df = pd.read_spss(os.path.join(path, folder, file))
                 # get_ideo(df)
                 polarity = get_polarity(df)
                 polarity_list.append(polarity)
 
 data = {'Time': time_list, 'Polarity': polarity_list}
 polarity_change = get_polarity_change_table(data)
-# save table? 
+# save table to table folder 
 draw_change(polarity_change)
 # plt.savefig("plot.png")
