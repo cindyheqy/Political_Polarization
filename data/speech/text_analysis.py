@@ -13,13 +13,13 @@ nlp.max_length = 2000000
 date_list = []
 polarity_list = []
 
-path = "/Users/guangbo_niu/Library/Mobile Documents/com~apple~CloudDocs/Academics/Autumn 2022/DPPP 2/Political_Polarization/data/speech/speech_data_content"
+path = "/Users/qingyi/Documents/uchicago/courses/data_programming_for_public_policy_2/Political_Polarization/data/speech/speech_data_content"
 flag = 0
 # try:
 for fname in os.listdir(path): 
-    # flag += 1
-    # if flag > 10: 
-    #     break
+    flag += 1
+    if flag > 3: 
+        break
     date = fname.replace(".txt", "")
     date = datetime.strptime(date, '%Y-%m-%d').date()
     date_list.append(date) 
@@ -29,8 +29,9 @@ for fname in os.listdir(path):
     # if len(text) >= 2000000:
     #     print(fname)
     doc = nlp(text)
-
-    polarity_list.append(doc._.blob.polarity) 
+    polarity = doc._.blob.polarity
+    polarity_list.append(polarity) 
+    print(date, polarity)
     data = {'Time': date_list, 'Polarity': polarity_list}
 # except ValueError:
 #     print(fname)
@@ -38,7 +39,8 @@ for fname in os.listdir(path):
 
 df = pd.DataFrame(data)
 df_sorted = df.sort_values(by='Time')
-print(df_sorted)
+df_sorted = df_sorted.reset_index(drop=True)
+df_sorted.to_csv('/Users/qingyi/Documents/uchicago/courses/data_programming_for_public_policy_2/Political_Polarization/data/speech/output.csv')
 
 f = plt.figure()
 f.set_figwidth(20)
