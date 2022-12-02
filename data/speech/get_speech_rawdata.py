@@ -3,12 +3,12 @@ import PyPDF2
 import datetime
 
 # specify record time rage
-start_date = datetime. date(2017, 1, 1)
-end_date = datetime. date(2017, 12, 30)
+start_date = datetime. date(2016, 1, 1)
+end_date = datetime. date(2016, 12, 31)
 delta = datetime. timedelta(days=1)
 
-output_path = "Political_Polarization/data/speech"
-date_no_record = open(f"{output_path}/date_no_record.txt","w") 
+output_path = "/Users/qingyihe/Documents/GitHub/Political_Polarization/data/speech"
+date_no_record = open(f"{output_path}/date_no_record_2016.txt","w") 
 
 while start_date <= end_date:
     path = f"https://api.govinfo.gov/packages/CREC-{start_date}/pdf?api_key=BsveU3Pa1wRgMsVrb6lNXkSdBub4OtEq0OMshRdp"
