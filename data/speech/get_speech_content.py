@@ -1,6 +1,6 @@
 import os
 import re
-path = "/Users/qingyi/Documents/uchicago/courses/data_programming_for_public_policy_2/Political_Polarization/data/speech"
+path = "/Users/qingyihe/Documents/GitHub/Political_Polarization/data/speech"
 
 speech_date = {}
 
@@ -22,12 +22,16 @@ def clean_data(text):
             ('VerDate' not in line) and 
             (len(line.split()) > 8) and 
             (line.strip() != "f") and 
+            (not re.search('(\([\d]+\)|\(\w\))', line)) and 
+            ('sec.' not in line.lower()) and 
+            ('(a)' not in line.lower()) and
             ('................' not in line)):
             output.append(line)
     new_text = "\n".join(output)
     return new_text
 
 for fname in os.listdir(os.path.join(path, "speech_data_txt")): 
+    # if fname.startswith('2016'):
         with open(f"{path}/speech_data_txt/{fname}") as page: 
             # match_mrspeaker = 0
             # count_thespeaker = 0
