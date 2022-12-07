@@ -47,6 +47,7 @@ def get_polarity(df):
 def get_polarity_change_table(data): 
     polarity_change = pd.DataFrame(data)
     polarity_change = polarity_change.sort_values(by='Time')
+    polarity_change = polarity_change.reset_index(drop=True)
     return polarity_change
     
 def draw_change(df): 
@@ -58,7 +59,7 @@ def draw_change(df):
 
 time_list = []
 polarity_list = []
-path = '/Users/qingyi/Documents/uchicago/courses/data_programming_for_public_policy_2/Political_Polarization/data/public opinion/data'
+path = '/Users/qingyi/Documents/uchicago/courses/data_programming_for_public_policy_2/Political_Polarization/data/public_opinion/data'
 for folder in os.listdir(path): 
     if folder.startswith('W'): 
         time = convert_time(folder)
@@ -72,6 +73,9 @@ for folder in os.listdir(path):
 
 data = {'Time': time_list, 'Polarity': polarity_list}
 polarity_change = get_polarity_change_table(data)
-# save table to table folder 
+polarity_change.to_csv('/Users/qingyi/Documents/uchicago/courses/data_programming_for_public_policy_2/Political_Polarization/data/public_opinion/output.csv')
+
 draw_change(polarity_change)
-# plt.savefig("plot.png")
+plt.savefig("plot.png")
+
+print(polarity_change)
