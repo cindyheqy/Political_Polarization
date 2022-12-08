@@ -70,6 +70,8 @@ def get_roll_call_polarity():
     # how to access each row: df.loc[(113, 1, '2013-01-03'),:]
     polarity_df = polarity_df.reset_index(level=[2])
     polarity_df = polarity_df.rename(columns={'level_2':'Date'})
+    polarity_df['Date'] = pd.to_datetime(polarity_df['Date'])
+    polarity_df = polarity_df.loc[polarity_df['Date']>='2015-01-01']
     polarity_df.to_csv('/Users/guangbo_niu/Library/Mobile Documents/com~apple~CloudDocs/Academics/Autumn 2022/DPPP 2/Political_Polarization/tables/roll_call.csv')
     return polarity_df
 
