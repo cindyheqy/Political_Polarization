@@ -17,7 +17,6 @@ def get_roll_call_polarity():
         df = pd.merge(df, 
                     roll_calls[roll_calls['congress']==congress].loc[:, ['rollnumber', 'date', 'bill_number', 'vote_result', 'vote_desc', 'vote_question']],
                     on='rollnumber')
-        #df['rollnumber']=df['congress'].astype(str) + '_' + df['rollnumber'].astype(str)
         return df
         
     h113_votes = (merge_votes_members_rollcalls(h113_votes, members_data, rollcalls_data, 113))
