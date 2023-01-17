@@ -41,11 +41,4 @@ for fname in os.listdir(path):
 df = pd.DataFrame(data)
 df_sorted = df.sort_values(by='Time')
 df_sorted = df_sorted.reset_index(drop=True)
-df_sorted.to_csv('/Users/qingyihe/Documents/GitHub/Political_Polarization/data/speech/output.csv')
-
-# f = plt.figure()
-# f.set_figwidth(20)
-# f.set_figheight(10)
-# plt.plot( 'Time', 'Polarity', data=df_sorted, marker='.', markerfacecolor='blue')
-# plt.legend()
-# plt.savefig("/Users/qingyi/Documents/uchicago/courses/data_programming_for_public_policy_2/Political_Polarization/data/speech/polarity_2017.png")
+df_sorted.to_csv('/Users/qingyi/Documents/uchicago/courses/data_programming_for_public_policy_2/Political_Polarization/tables/speech.csv')

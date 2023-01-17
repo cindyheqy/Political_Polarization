@@ -33,32 +33,18 @@ def clean_data(text):
 for fname in os.listdir(os.path.join(path, "speech_data_txt")): 
     # if fname.startswith('2016'):
         with open(f"{path}/speech_data_txt/{fname}") as page: 
-            # match_mrspeaker = 0
-            # count_thespeaker = 0
             date = fname.split('.')[0]
             text = page.read()
             has_speech = False
             for sub_text in text.split('THE SPEAKER'): 
-                # count_thespeaker += 1
-                # match_speaker = 0
                 speech_text = get_speech(sub_text)
                 if speech_text: 
-                    # match_mrspeaker += 1
                     has_speech = True
                     if date not in speech_date.keys(): 
                         speech_date[date] = speech_text
                     else: 
                         speech_date[date] += speech_text
-            # speech_date[]
-            # if m == False: 
-            #     print(date, "no match today!")
-            # print(date, count_thespeaker, match_mrspeaker)
-            # clean_content = {date: clean_data(content) for date, content in speech_date.items()}
             if has_speech == True: 
                 speech_date[date] = clean_data(speech_date[date])
                 with open(f"{path}/speech_data_content/{fname}", 'w', encoding='utf-8') as ofile:
                     ofile.write(speech_date[date]) # save speech content
-
-# clean = clean_data(speech_date["2017-12-20"])
-# with open(f"{path}/tmp.txt", 'w', encoding='utf-8') as ofile:
-#     ofile.write(clean)
