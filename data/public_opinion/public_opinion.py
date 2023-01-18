@@ -8,9 +8,6 @@ import matplotlib.pyplot as plt
 # delete W14.5_Diary16
 # rename "W36_Jun 18" to "W36_Jun18"
 
-# need to save all static plot to data visualization folder, but how about the interective plot? 
-# is there a way to import variable in other folder? 
-
 def convert_time(fname): 
     time = folder
     time = re.sub('W10|W13', '2015', time)
@@ -24,10 +21,8 @@ def get_ideo(df):
     df['count'] = 0
     if 'F_IDEO_FINAL' in df.columns: 
         df_ideo = df.groupby('F_IDEO_FINAL').count()['count']
-        # print(df_ideo.index)
     elif 'F_IDEO' in df.columns:
         df_ideo = df.groupby('F_IDEO').count()['count']
-        # print(df_ideo.index)
 
     df_ideo = df_ideo.to_frame() 
     df_ideo.loc['Moderate', 'weight'] = 0
@@ -49,13 +44,6 @@ def get_polarity_change_table(data):
     polarity_change = polarity_change.sort_values(by='Time')
     polarity_change = polarity_change.reset_index(drop=True)
     return polarity_change
-    
-def draw_change(df): 
-    f = plt.figure()
-    f.set_figwidth(20)
-    f.set_figheight(10)
-    plt.plot( 'Time', 'Polarity', data=df, marker='.', markerfacecolor='blue')
-    plt.legend()
 
 time_list = []
 polarity_list = []
@@ -67,15 +55,11 @@ for folder in os.listdir(path):
         for file in os.listdir(os.path.join(path, folder)): 
             if file.endswith(".sav"): 
                 df = pd.read_spss(os.path.join(path, folder, file))
-                # get_ideo(df)
                 polarity = get_polarity(df)
                 polarity_list.append(polarity)
 
 data = {'Time': time_list, 'Polarity': polarity_list}
 polarity_change = get_polarity_change_table(data)
-polarity_change.to_csv('/Users/qingyi/Documents/uchicago/courses/data_programming_for_public_policy_2/Political_Polarization/data/public_opinion/output.csv')
+polarity_change.to_csv('/Users/qingyi/Documents/uchicago/courses/data_programming_for_public_policy_2/Political_Polarization/tables/public_opinion.csv')
 
-draw_change(polarity_change)
-plt.savefig("plot.png")
-
-print(polarity_change)
+# print(polarity_change)
