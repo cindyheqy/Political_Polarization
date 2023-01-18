@@ -4,10 +4,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import colors
 
-
-
-
-
 app_ui = ui.page_fluid(
     ui.h1("Political Polarization", align="center"),
     ui.input_date_range(
